@@ -4,6 +4,7 @@
 ![Status](https://img.shields.io/badge/status-active-success.svg)
 ![Tech](https://img.shields.io/badge/tech-HTML%20%7C%20CSS%20%7C%20Chart.js-orange)
 
+![](figures/cover.jpg)
 A dynamic, single-page web visualization summarizing my interaction history, research focus, and "evolution" alongside Gemini AI throughout the year 2025. 
 
 Generated via collaboration between **Zhū Jùnhán** (Westlake University) and **Gemini**.
@@ -32,7 +33,7 @@ This project serves as a fun, visual annual summary. It analyzes the "brain acti
 3.  Enjoy the animations!
 
 ## 🌐 Live Demo
-*Check out the live version here: [Insert GitHub Pages Link Here]* *(e.g., https://Alrightlone.github.io/Gemini-Annual-Report/)*
+*Check out the live version here: [[Gemini-Annual-Report](https://Alrightlone.github.io/Gemini-Annual-Report/)]*
 
 ## 👤 Author
 **Zhū Jùnhán**
