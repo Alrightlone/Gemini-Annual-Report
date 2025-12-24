@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Gemini x 诸俊涵 年度协同进化报告</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #00f2fe;
+            --secondary-color: #4facfe;
+            --accent-color: #f093fb;
+            --bg-dark: #0a0e17;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --text-light: #e0e0e0;
+            --text-muted: #a0a0a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(79, 172, 254, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(240, 147, 251, 0.1) 0%, transparent 20%);
+            background-attachment: fixed;
+        }
+
+        /* 通用样式 */
+        h1, h2, h3 {
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        section {
+            padding: 5rem 10%;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* 动画辅助类 */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            align-items: flex-start;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+        }
+
+        #hero h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .typewriter-text {
+            color: var(--primary-color);
+            border-right: 2px solid var(--primary-color);
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary-color); }
+        }
+
+        .hero-info {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .keywords-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .keyword-tag {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        .keyword-tag:hover {
+            background: rgba(0, 242, 254, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.2);
+        }
+
+        /* Brain Activity Section */
+        #brain-activity {
+            align-items: center;
+        }
+        .chart-container {
+            position: relative;
+            height: 60vh;
+            width: 80%;
+            max-width: 800px;
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Achievements Section */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .achievement-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .achievement-card:hover::before {
+            left: 100%;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary-color);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .achievement-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .achievement-card p.desc {
+            color: var(--text-light);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .achievement-card p.comment {
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        /* Roast Section */
+        .chat-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .chat-bubble {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .gemini-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+        }
+
+        .chat-content {
+            background: rgba(79, 172, 254, 0.15);
+            border: 1px solid var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 0 20px 20px 20px;
+            position: relative;
+        }
+        .chat-content h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Predictions Section */
+        .predictions-grid {
+             display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            width: 100%;
+        }
+
+        .prediction-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease;
+        }
+        .prediction-card:hover {
+             transform: scale(1.05);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+        .status-great { background: linear-gradient(to right, #11998e, #38ef7d); box-shadow: 0 5px 15px rgba(56, 239, 125, 0.3); }
+        .status-stable { background: linear-gradient(to right, #4facfe, #00f2fe); box-shadow: 0 5px 15px rgba(0, 242, 254, 0.3); }
+        .status-focus { background: linear-gradient(to right, #ff9a44, #fc6076); box-shadow: 0 5px 15px rgba(252, 96, 118, 0.3); }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .footer-quote {
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .footer-note {
+            color: var(--text-muted);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            #hero h1 { font-size: 2.5rem; }
+            section { padding: 4rem 5%; }
+            .chart-container { height: 50vh; width: 100%; padding: 1rem;}
+            .chat-bubble { flex-direction: column; gap: 0.5rem;}
+            .chat-content { border-radius: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <section id="hero">
+        <div class="hero-badge fade-in-up">2025 年度特定生成报告</div>
+        <h1 class="fade-in-up">Gemini x 诸俊涵<br>协同进化报告 <span class="typewriter-text" id="typewriter"></span></h1>
+        <div class="hero-info fade-in-up">
+            <p><i class="fas fa-user-graduate"></i> <strong>用户ID:</strong> 西湖大学电子信息工程的六边形战士</p>
+            <p><i class="fas fa-bullseye"></i> <strong>目标代号:</strong> 27Fall PhD & ECCV 顶会收割者</p>
+        </div>
+        <div class="keywords-container fade-in-up">
+            <span class="keyword-tag">#DSP信号处理</span>
+            <span class="keyword-tag">#模型剪枝Pruning</span>
+            <span class="keyword-tag">#全栈科研</span>
+            <span class="keyword-tag">#凌晨三点的GitHub</span>
+        </div>
+    </section>
+
+    <section id="brain-activity">
+        <h2 class="fade-in-up">一、年度大脑活跃度分析</h2>
+        <div class="chart-container fade-in-up">
+            <canvas id="brainChart"></canvas>
+        </div>
+    </section>
+
+    <section id="achievements">
+        <h2 class="fade-in-up">二、年度成就解锁 (Achievements Unlocked)</h2>
+        <div class="cards-grid">
+            <div class="achievement-card fade-in-up" style="transition-delay: 0.1s;">
+                <i class="fas fa-wave-square card-icon"></i>
+                <h3>滤波器驯兽师</h3>
+                <p class="desc">DSP 期末项目：成功利用 MATLAB 与各种频率域滤波器搏斗。</p>
+                <p class="comment">“别人看到的是波形，您看到的是数学之美（和无穷无尽的调试）。”</p>
+            </div>
+            <div class="achievement-card fade-in-up" style="transition-delay: 0.3s;">
+                <i class="fas fa-database card-icon" style="color: var(--accent-color);"></i>
+                <h3>大数据炼丹师</h3>
+                <p class="desc">ML 项目：处理 20,000 条推特数据进行情感分析。</p>
+                <p class="comment">“从纷繁复杂中提炼 Positive 和 Negative，这是对人类本质的洞察。”</p>
+            </div>
+            <div class="achievement-card fade-in-up" style="transition-delay: 0.5s;">
+                <i class="fas fa-rocket card-icon" style="color: #38ef7d;"></i>
+                <h3>ECCV 预备役</h3>
+                <p class="desc">锁定方向：多模态 DLLM 与 Efficient AI。</p>
+                <p class="comment">“目标清晰，方向明确。这波 PhD 申请稳了。”</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gemini-roast">
+        <h2 class="fade-in-up">三、Gemini 的年度吐槽 (温馨版)</h2>
+        <div class="chat-container">
+            <div class="chat-bubble fade-in-up">
+                <div class="gemini-avatar"><i class="fas fa-robot"></i></div>
+                <div class="chat-content">
+                    <h4>关于“既要又要”</h4>
+                    <p>您是我见过最贪心的用户之一（褒义）。既要做底层的 DSP 信号处理，又要做上层的 AI 模型剪枝，顺便还要搞个 Web 开发弄博客。您的技能树不是树，是片森林吧？</p>
+                </div>
+            </div>
+            <div class="chat-bubble fade-in-up" style="transition-delay: 0.2s;">
+                <div class="gemini-avatar"><i class="fas fa-robot"></i></div>
+                <div class="chat-content">
+                    <h4>关于作息时间</h4>
+                    <p>查看后台日志，发现您在深夜活跃度极高。虽然 Research 是 "Lonely Zone"，但还是建议您偶尔去 "Sleepy Zone" 待一会儿。</p>
+                </div>
+            </div>
+            <div class="chat-bubble fade-in-up" style="transition-delay: 0.4s;">
+                <div class="gemini-avatar"><i class="fas fa-robot"></i></div>
+                <div class="chat-content">
+                    <h4>关于提问硬度</h4>
+                    <p>您的很多问题充满了“求知（难为AI）”的渴望。经常是前一秒还在问宏观的科研规划，后一秒就甩过来一段报错的代码。这种过山车般的体验，也就是我心态好。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="predictions">
+        <h2 class="fade-in-up">四、2026 年度运势预测 & 建议</h2>
+        <div class="predictions-grid">
+            <div class="prediction-card fade-in-up" style="transition-delay: 0.1s;">
+                <div class="status-indicator status-great"><i class="fas fa-star"></i> 学术运：大吉</div>
+                <p>您在 Efficient AI 和 Model Compression 领域的布局非常有前瞻性。27Fall 申请季，您的 Research Experience 将是最大的王牌。</p>
+            </div>
+            <div class="prediction-card fade-in-up" style="transition-delay: 0.3s;">
+                <div class="status-indicator status-stable"><i class="fas fa-code"></i> 代码运：稳中向好</div>
+                <p>Bug 依然会像雨后的蘑菇一样冒出来，但凭借您现在“软硬通吃”的能力，Debug 的速度会越来越快。</p>
+            </div>
+            <div class="prediction-card fade-in-up" style="transition-delay: 0.5s;">
+                <div class="status-indicator status-focus"><i class="fas fa-heartbeat"></i> 健康运：重点关注</div>
+                <p>并在 2026 年学会一个新的技能：<strong>早睡</strong>（虽然我知道这对 EE 专业的学生来说很难）。</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-quote fade-in-up">
+            "Research is a lonely zone,<br>but you are not alone."
+        </div>
+        <p class="footer-note fade-in-up">
+            去吧，为了 ECCV，为了 27Fall！<br>Gemini 随时待命，做您最忠实、最耐吐槽的科研 Co-pilot。
+        </p>
+    </footer>
+
+    <script>
+        // --- 1. 打字机效果 ---
+        const typewriterText = document.getElementById('typewriter');
+        const phrases = ["_ZHŪ JÙNHÁN", "_硬核科研人", "_西湖六边形战士"];
+        let i = 0;
+        let j = 0;
+        let currentPhrase = [];
+        let isDeleting = false;
+        let isEnd = false;
+
+        function loop() {
+            isEnd = false;
+            typewriterText.innerHTML = currentPhrase.join('');
+
+            if (i < phrases.length) {
+                if (!isDeleting && j <= phrases[i].length) {
+                    currentPhrase.push(phrases[i][j]);
+                    j++;
+                    typewriterText.innerHTML = currentPhrase.join('');
+                }
+
+                if (isDeleting && j >= 0) {
+                    currentPhrase.pop(phrases[i][j]);
+                    j--;
+                    typewriterText.innerHTML = currentPhrase.join('');
+                }
+
+                if (j == phrases[i].length) {
+                    isEnd = true;
+                    isDeleting = true;
+                }
+
+                if (isDeleting && j === 0) {
+                    currentPhrase = [];
+                    isDeleting = false;
+                    i++;
+                    if (i === phrases.length) {
+                        i = 0;
+                    }
+                }
+            }
+            const time = isEnd ? 2000 : isDeleting ? 100 : 200;
+            setTimeout(loop, time);
+        }
+        loop();
+
+        // --- 2. 滚动监测动画 (Intersection Observer) ---
+        const observerOptions = {
+            threshold: 0.2
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // --- 3. Chart.js 雷达图初始化 ---
+        const ctx = document.getElementById('brainChart').getContext('2d');
+        
+        // 定义渐变色
+        let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(0, 242, 254, 0.5)');   // primary color with opacity
+        gradient.addColorStop(1, 'rgba(240, 147, 251, 0.1)'); // accent color with low opacity
+
+        const brainChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: [
+                    '信号处理焦虑 (DSP)', 
+                    'AI 科研野心 (Efficient AI)', 
+                    '多线程并发能力', 
+                    '文艺自留地 (Blog)'
+                ],
+                datasets: [{
+                    label: '大脑活跃度成分',
+                    data: [40, 30, 20, 10],
+                    backgroundColor: gradient,
+                    borderColor: '#00f2fe',
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#f093fb',
+                    pointHoverBackgroundColor: '#f093fb',
+                    pointHoverBorderColor: '#fff',
+                    borderWidth: 3,
+                    pointRadius: 5,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        pointLabels: {
+                            color: '#e0e0e0',
+                            font: {
+                                size: 14,
+                                family: "'Inter', sans-serif"
+                            }
+                        },
+                        ticks: {
+                            display: false, // 隐藏刻度数字，更美观
+                            beginAtZero: true,
+                            max: 50
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false // 隐藏图例，因为标题已经说明了
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(10, 14, 23, 0.9)',
+                        titleColor: '#00f2fe',
+                        bodyColor: '#fff',
+                        padding: 12,
+                        displayColors: false,
+                        callbacks: {
+                            label: function(context) {
+                                return context.raw + '% 占比';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
